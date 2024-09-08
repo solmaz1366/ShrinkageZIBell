@@ -1,7 +1,6 @@
 #Shrinkage estimators in zero-inflated Bell regression model with application
-
-
-
+#This code is associated with the article referenced as arXiv:2403.00749. 
+#Please ensure to cite it if you utilize this code.
 
 rm(list = ls())
 
@@ -11,7 +10,7 @@ source("bellloglikfun.R")
 #-----------------------experiment design----------------------#
 m=1000     # the number of replications
 p = 7      # the number of count paraneters 
-q = 3      # the number of zero patameters 
+q = 3      # the number of zero parameters 
 k = p + q  # the number of total parameters in the model
 nobs= 200   # the number of observations
 
@@ -19,7 +18,7 @@ nobs= 200   # the number of observations
 betav = c(0.5, 1,-1.5, rep(0, times=p-3))
 zetav= c(0.5, -1, 0)
 
-# restrictions on the model
+# Restrictions on the model
 r<- p-2  # the number of restrictions
 H<- matrix(0, nrow=r, ncol=(p+q))
 
@@ -133,7 +132,7 @@ for (j in 1:m) {
   # obtain information matrix
   Vb<- vcov(md1)    
   
-  # inverse of information matrix
+  # inverse of the information matrix
   XWX<- ginv(Vb,tol = sqrt(.Machine$double.eps))
   
   #---------------------------------------------------------------------#
@@ -145,7 +144,7 @@ for (j in 1:m) {
   D1<- ginv(H%*%Vb%*%t(H),tol = sqrt(.Machine$double.eps))
   BRE[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV
   
-  # calculate Test statistic
+  # Calculate test statistic
   Tstat<- t(DTV)%*%D1%*%DTV
   df<- r
   achit<- qchisq(0.975, df)
@@ -169,7 +168,7 @@ for (j in 1:m) {
   DTV2<- H%*%BMLE[j,]-h2
   BRE2[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV2
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat2<- t(DTV2)%*%D1%*%DTV2
   
   # derive JSZIBE
@@ -191,7 +190,7 @@ for (j in 1:m) {
   DTV4<- H%*%BMLE[j,]-h4
   BRE4[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV4
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat4<- t(DTV4)%*%D1%*%DTV4
   
   # derive JSZIBE
@@ -213,7 +212,7 @@ for (j in 1:m) {
   DTV6<- H%*%BMLE[j,]-h6
   BRE6[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV6
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat6<- t(DTV6)%*%D1%*%DTV6
   
   # derive JSZIBE
@@ -235,7 +234,7 @@ for (j in 1:m) {
   DTV8<- H%*%BMLE[j,]-h8
   BRE8[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV8
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat8<- t(DTV8)%*%D1%*%DTV8
   
   # derive JSZIBE
@@ -257,7 +256,7 @@ for (j in 1:m) {
   DTV1<- H%*%BMLE[j,]-h1
   BRE1[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV1
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat1<- t(DTV1)%*%D1%*%DTV1
   
   # derive JSZIBE
@@ -279,7 +278,7 @@ for (j in 1:m) {
   DTV12<- H%*%BMLE[j,]-h12
   BRE12[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV12
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat12<- t(DTV12)%*%D1%*%DTV12
   
   # derive JSZIBE
@@ -301,7 +300,7 @@ for (j in 1:m) {
   DTV14<- H%*%BMLE[j,]-h14
   BRE14[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV14
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat14<- t(DTV14)%*%D1%*%DTV14
   
   # derive JSZIBE
@@ -323,7 +322,7 @@ for (j in 1:m) {
   DTV16<- H%*%BMLE[j,]-h16
   BRE16[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV16
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat16<- t(DTV16)%*%D1%*%DTV16
   
   # derive JSZIBE
@@ -345,7 +344,7 @@ for (j in 1:m) {
   DTV18<- H%*%BMLE[j,]-h18
   BRE18[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV18
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat18<- t(DTV18)%*%D1%*%DTV18
   
   # derive JSZIBE
@@ -367,7 +366,7 @@ for (j in 1:m) {
   DTV20<- H%*%BMLE[j,]-h20
   BRE20[j,]<- BMLE[j,]- Vb%*%t(H)%*%D1%*%DTV20
   
-  # calculate Test statistic
+  # calculate test statistic
   Tstat20<- t(DTV20)%*%D1%*%DTV20
   
   # derive JSZIBE
@@ -383,10 +382,10 @@ for (j in 1:m) {
   
 }
 
-# true value of parameter
+# true value of the parameters
 b<- betav
 
-# The output of simulation
+# The output of the simulation
 MSE_MLE<- MSE(BMLE[,-c(1:3)],b)
 MSE_BRE<- MSE(BRE[,-c(1:3)],b)
 MSE_BJS<- MSE(BJS[,-c(1:3)],b)
@@ -472,5 +471,5 @@ Total_RE[9,-1]<- RE16
 Total_RE[10,-1]<- RE18
 Total_RE[11,-1]<- RE20
 
-
+print(Total_RE)
 
